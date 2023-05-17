@@ -2,10 +2,6 @@
 
 import { useState } from "react";
 
-function classnames(...classnames: string[]) {
-  return classnames.filter((c) => c !== "").join(" ");
-}
-
 export default function Enter() {
   const [method, setMethod] = useState<"email" | "phone">("email");
   const onEmailClick = () => setMethod("email");

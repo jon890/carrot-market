@@ -9,3 +9,8 @@
 - React : 18
 - Tailwind : 3
 - Icons: HeroIcons
+
+### Todos
+
+- 레이아웃을 재사용하고 있지만 `layout.tsx`의 활용성이 조금 떨어진다
+  - 다형성이 지원된다면 각 페이지마다 인터페이스를 구현하고 그 값을 `layout.tsx`에서 끌어다 쓸 수 있을까?
