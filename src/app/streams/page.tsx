@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 
 const Live: NextPage = () => {
   return (
-    <Layout title="실시간 스트림">
+    <Layout title="실시간 스트림" hasTabBar>
       <div className="space-y-4 divide-[1px] py-10">
         {[1, 1, 1, 1, 1, 1, 1].map((_, i) => (
           <div className="px-4  pt-4" key={i}>

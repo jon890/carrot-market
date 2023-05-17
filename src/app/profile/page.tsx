@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 
 const Profile: NextPage = () => {
   return (
-    <Layout title="나의 캐럿">
+    <Layout title="나의 캐럿" hasTabBar>
       <div className="px-4 py-10">
         <div className="flex items-center space-x-3">
           <div className="h-16 w-16 rounded-full bg-slate-500" />
