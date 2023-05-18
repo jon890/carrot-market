@@ -9,7 +9,7 @@
 - React : 18
 - Tailwind : 3
 - Icons: HeroIcons
-- Database : PlanetScale Vitess (mysql compatible)
+- ORM + Database : Prisma + PlanetScale Vitess (mysql compatible)
 
 ### Todos
 
