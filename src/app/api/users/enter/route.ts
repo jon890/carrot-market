@@ -7,7 +7,9 @@ export async function POST(request: NextRequest) {
 
   const userPayload = phone ? { phone } : email ? { email } : null;
   if (!userPayload) return NextResponse.json({ ok: false }, { status: 400 });
-  const tokenPayload = crypto.randomBytes(3).toString("hex");
+
+  // const tokenPayload = crypto.randomBytes(3).toString("hex");
+  const tokenPayload = Math.floor(100000 + Math.random() * 900000) + "";
 
   const token = await prismaClient.token.create({
     data: {
