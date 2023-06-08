@@ -1,6 +1,6 @@
 import prismaClient from "@/libs/server/prisma-client";
+import twilioClient, { sendMessage } from "@/libs/server/twilio-client";
 import { NextRequest, NextResponse } from "next/server";
-import crypto from "crypto";
 
 export async function POST(request: NextRequest) {
   const { phone, email } = await request.json();
@@ -28,7 +28,10 @@ export async function POST(request: NextRequest) {
     },
   });
 
-  console.log(token);
+  if (phone) {
+    const ret = await sendMessage(`Your login token is ${tokenPayload}`);
+    console.log(ret);
+  }
 
   return NextResponse.json({ ok: true }, { status: 200 });
 }
