@@ -13,10 +13,27 @@ interface EnterForm {
   phone?: string;
 }
 
+interface TokenForm {
+  token: string;
+}
+
+interface MutationResult {
+  ok: boolean;
+}
+
 const Enter: NextPage = () => {
-  const { register, reset, handleSubmit } = useForm<EnterForm>();
-  const [enter, { loading, data, error }] = useMutation("/api/users/enter");
   const [method, setMethod] = useState<"email" | "phone">("email");
+
+  const { register, reset, handleSubmit } = useForm<EnterForm>();
+  const { register: tokenRegister, handleSubmit: tokenHandleSubmit } =
+    useForm<TokenForm>();
+
+  const [enter, { loading, data, error }] =
+    useMutation<MutationResult>("/api/users/enter");
+  const [
+    confirmToken,
+    { loading: tokenLoading, data: tokenData, error: tokenError },
+  ] = useMutation<MutationResult>("/api/users/confirm");
 
   const onEmailClick = () => {
     if (method !== "email") reset();
@@ -28,7 +45,13 @@ const Enter: NextPage = () => {
   };
 
   const onValid = (data: EnterForm) => {
+    if (loading) return;
     enter(data);
+  };
+
+  const onTokenValid = (data: TokenForm) => {
+    if (tokenLoading) return;
+    confirmToken(data);
   };
 
   useEffect(() => {
@@ -37,65 +60,88 @@ const Enter: NextPage = () => {
 
   return (
     <div className="mt-16 px-4">
-      <h3 className="text-center text-3xl font-bold ">Enter to Carrot</h3>
-      <div className="mt-8">
-        <div className="flex flex-col items-center">
-          <h5 className="text-sm font-medium text-gray-500">Enter using:</h5>
-          <div className="mt-8 grid w-full grid-cols-2 gap-16 border-b">
-            <button
-              className={classnames(
-                "border-b-2 pb-4 font-medium",
-                method === "email"
-                  ? "border-orange-500 text-orange-400"
-                  : "border-transparent text-gray-500"
-              )}
-              onClick={onEmailClick}
-            >
-              Email address
-            </button>
-            <button
-              className={classnames(
-                "border-b-2 pb-4 font-medium",
-                method === "phone"
-                  ? "border-orange-500 text-orange-400"
-                  : "border-transparent text-gray-500"
-              )}
-              onClick={onPhoneClick}
-            >
-              Phone number
-            </button>
-          </div>
-        </div>
+      <h3 className="text-center text-3xl font-bold">Enter to Carrot</h3>
+      <div className="mt-12">
+        {data?.ok ? (
+          <form
+            className="mt-8 flex flex-col"
+            onSubmit={tokenHandleSubmit(onTokenValid)}
+          >
+            <Input
+              register={tokenRegister("token")}
+              label="Confirmation Token"
+              name="token"
+              type="number"
+              required
+            />
+            <Button>{loading ? "Loading..." : "Confirm Token"}</Button>
+          </form>
+        ) : (
+          <>
+            <div className="flex flex-col items-center">
+              <h5 className="text-sm font-medium text-gray-500">
+                Enter using:
+              </h5>
+              <div className="mt-8 grid w-full grid-cols-2 gap-16 border-b">
+                <button
+                  className={classnames(
+                    "border-b-2 pb-4 font-medium",
+                    method === "email"
+                      ? "border-orange-500 text-orange-400"
+                      : "border-transparent text-gray-500"
+                  )}
+                  onClick={onEmailClick}
+                >
+                  Email address
+                </button>
+                <button
+                  className={classnames(
+                    "border-b-2 pb-4 font-medium",
+                    method === "phone"
+                      ? "border-orange-500 text-orange-400"
+                      : "border-transparent text-gray-500"
+                  )}
+                  onClick={onPhoneClick}
+                >
+                  Phone number
+                </button>
+              </div>
+            </div>
 
-        <form className="mt-8 flex flex-col" onSubmit={handleSubmit(onValid)}>
-          {method === "email" ? (
-            <>
-              <Input
-                register={register("email")}
-                label="Email address"
-                name="email"
-                type="email"
-                required
-              />
-              <Button>{loading ? "Loading..." : "Get login link"}</Button>
-            </>
-          ) : null}
-          {method === "phone" ? (
-            <>
-              <Input
-                register={register("phone")}
-                label="input"
-                name="input"
-                kind="phone"
-                type="number"
-                required
-              />
-              <Button>
-                {loading ? "Loading..." : "Get one-time password"}
-              </Button>
-            </>
-          ) : null}
-        </form>
+            <form
+              className="mt-8 flex flex-col"
+              onSubmit={handleSubmit(onValid)}
+            >
+              {method === "email" ? (
+                <>
+                  <Input
+                    register={register("email")}
+                    label="Email address"
+                    name="email"
+                    type="email"
+                    required
+                  />
+                  <Button>{loading ? "Loading..." : "Get login link"}</Button>
+                </>
+              ) : null}
+              {method === "phone" ? (
+                <>
+                  <Input
+                    register={register("phone")}
+                    label="input"
+                    name="input"
+                    kind="phone"
+                    type="number"
+                    required
+                  />
+                  <Button>
+                    {loading ? "Loading..." : "Get one-time password"}
+                  </Button>
+                </>
+              ) : null}
+            </form>
+          </>
+        )}
 
         <div className="mt-8">
           <div className="relative">
