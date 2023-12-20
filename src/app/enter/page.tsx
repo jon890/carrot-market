@@ -31,6 +31,7 @@ export default function Enter() {
     EnterForm,
     MutationResult
   >("/api/users/enter");
+
   const [
     confirmToken,
     { loading: tokenLoading, data: tokenData, error: tokenError },
