@@ -9,4 +9,4 @@ export async function sendMessage(text: string) {
     to: process.env.TWILIO_TO!,
     body: text,
   });
-}
+}; 

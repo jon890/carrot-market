@@ -29,25 +29,29 @@ export async function POST(request: NextRequest) {
     },
   });
 
-  if (phone) {
-    const ret = await sendMessage(`Your login token is ${tokenPayload}`);
-    console.log(ret);
-  } else if (email) {
-    try {
-      const ret = await sendEmail({
-        from: "bifos@nhn.com",
-        to: email,
-        subject: "Your Carrot Market Verification Email",
-        text: `Your token is ${tokenPayload}`,
-        html: `<strong>Your token is ${tokenPayload}</strong>`,
-      });
-    } catch (e) {
-      // if (e instanceof ResponseError) {
-      //   console.log(e.response.body);
-      // }
+  console.log("Token", tokenPayload);
 
-      console.log((e as any).response.body);
-    }
+  if (phone) {
+    // try {
+    //   const ret = await sendMessage(`Your login token is ${tokenPayload}`); // console.log(ret);
+    // } catch (e) {
+    //   console.error(e);
+    // }
+  } else if (email) {
+    // try {
+    //   const ret = await sendEmail({
+    //     from: "bifos@nhn.com",
+    //     to: email,
+    //     subject: "Your Carrot Market Verification Email",
+    //     text: `Your token is ${tokenPayload}`,
+    //     html: `<strong>Your token is ${tokenPayload}</strong>`,
+    //   });
+    // } catch (e) {
+    //   // if (e instanceof ResponseError) {
+    //   //   console.log(e.response.body);
+    //   // }
+    //   console.error((e as any).response.body);
+    // }
   }
 
   return NextResponse.json({ ok: true }, { status: 200 });
