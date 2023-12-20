@@ -4,7 +4,6 @@ import Button from "@/components/button";
 import Input from "@/components/input";
 import useMutation from "@/libs/client/useMutation";
 import { classnames } from "@/libs/client/utils";
-import { NextPage } from "next";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -21,7 +20,7 @@ interface MutationResult {
   ok: boolean;
 }
 
-const Enter: NextPage = () => {
+export default function Enter() {
   const [method, setMethod] = useState<"email" | "phone">("email");
 
   const { register, reset, handleSubmit } = useForm<EnterForm>();
@@ -183,6 +182,4 @@ const Enter: NextPage = () => {
       </div>
     </div>
   );
-};
-
-export default Enter;
+}
