@@ -32,7 +32,7 @@ export default function Layout({
           "fixed top-0 flex w-full max-w-xl items-center border-b bg-white px-10 py-3 text-lg  font-medium text-gray-800"
         )}
       >
-        {canGoBack ? (
+        {canGoBack && (
           <button onClick={goBack}>
             <svg
               className="h-6 w-6"
@@ -49,8 +49,8 @@ export default function Layout({
               ></path>
             </svg>
           </button>
-        ) : null}
-        {title ? <span>{title}</span> : null}
+        )}
+        {title && <span>{title}</span>}
       </div>
 
       <div className={classnames("pt-12", hasTabBar ? "pb-24" : "")}>
@@ -58,7 +58,7 @@ export default function Layout({
       </div>
 
       {/* Bottom Navigation */}
-      {hasTabBar ? (
+      {hasTabBar && (
         <nav className="fixed bottom-0 flex w-full max-w-xl justify-between border-t bg-white px-10 pb-5 pt-3 text-xs text-gray-700">
           <Link href="/" className="flex flex-col items-center space-y-2">
             <svg
@@ -155,7 +155,7 @@ export default function Layout({
             <span>나의 캐럿</span>
           </Link>
         </nav>
-      ) : null}
+      )}
     </div>
   );
 }
