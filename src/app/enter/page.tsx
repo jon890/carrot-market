@@ -27,12 +27,14 @@ export default function Enter() {
   const { register: tokenRegister, handleSubmit: tokenHandleSubmit } =
     useForm<TokenForm>();
 
-  const [enter, { loading, data, error }] =
-    useMutation<MutationResult>("/api/users/enter");
+  const [enter, { loading, data, error }] = useMutation<
+    EnterForm,
+    MutationResult
+  >("/api/users/enter");
   const [
     confirmToken,
     { loading: tokenLoading, data: tokenData, error: tokenError },
-  ] = useMutation<MutationResult>("/api/users/confirm");
+  ] = useMutation<TokenForm, MutationResult>("/api/users/confirm");
 
   const onEmailClick = () => {
     if (method !== "email") reset();

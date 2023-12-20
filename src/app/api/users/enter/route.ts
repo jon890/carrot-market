@@ -39,9 +39,8 @@ export async function POST(request: NextRequest) {
         to: email,
         subject: "Your Carrot Market Verification Email",
         text: `Your token is ${tokenPayload}`,
-        html: `<strong>ㅛour token is ${tokenPayload}</strong>`,
+        html: `<strong>Your token is ${tokenPayload}</strong>`,
       });
-      console.log(ret);
     } catch (e) {
       // if (e instanceof ResponseError) {
       //   console.log(e.response.body);

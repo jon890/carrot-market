@@ -6,18 +6,21 @@ type UseMutationState<T> = {
   error: any;
 };
 
-type UseMutationResult<T> = [(data: any) => void, UseMutationState<T>];
+type UseMutationResult<Data, Result> = [
+  (data: Data) => void,
+  UseMutationState<Result>
+];
 
-export default function useMutation<T = any>(
+export default function useMutation<Data, Result>(
   url: string
-): UseMutationResult<T> {
-  const [state, setState] = useState<UseMutationState<T>>({
+): UseMutationResult<Data, Result> {
+  const [state, setState] = useState<UseMutationState<Result>>({
     loading: false,
     data: undefined,
     error: undefined,
   });
 
-  async function mutation(data?: any) {
+  async function mutation(data?: Data) {
     setState((prev) => ({ ...prev, error: undefined, loading: true }));
 
     try {
