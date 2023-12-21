@@ -1,11 +1,9 @@
 import Badge from "@/components/badge";
 import FloatingButton from "@/components/floating-button";
 import Layout from "@/components/layout";
-import { getProfileIfLoggedIn } from "@/libs/server/get-profile";
 import Link from "next/link";
 
 export default async function Community() {
-  const user = await getProfileIfLoggedIn();
   return (
     <Layout title="동네생활" hasTabBar>
       <div className="space-y-8 px-4 py-16">

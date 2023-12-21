@@ -1,8 +1,9 @@
 "use client";
 
+import useUser from "@/libs/client/useUser";
 import { classnames } from "@/libs/client/utils";
 import Link from "next/link";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 interface LayoutProps {
   title?: string;
@@ -168,7 +169,7 @@ export default function Layout({
             href="/profile"
             className={classnames(
               "flex flex-col items-center space-y-2",
-              pathname === "/streams"
+              pathname === "/profile"
                 ? "text-orange-500"
                 : "hover:text-gray-500 transition-colors"
             )}
