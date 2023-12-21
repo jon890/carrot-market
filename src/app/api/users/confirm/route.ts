@@ -3,6 +3,12 @@ import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
+type SessionData = {
+  user?: {
+    id: number;
+  };
+};
+
 export async function POST(req: NextRequest) {
   const { token } = await req.json();
 
@@ -16,7 +22,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false }, { status: 400 });
   }
 
-  const session = await getIronSession(cookies(), {
+  const session = await getIronSession<SessionData>(cookies(), {
     password: process.env.AUTH_KEY!,
     cookieName: "NEXT_SESSION",
   });
@@ -25,8 +31,6 @@ export async function POST(req: NextRequest) {
     id: exists.userId,
   };
   await session.save();
-
-  console.log(session);
 
   return NextResponse.json({ ok: true }, { status: 200 });
 }
