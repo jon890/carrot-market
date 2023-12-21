@@ -23,22 +23,20 @@ export default function useMutation<Data, Result>(
   async function mutation(data?: Data) {
     setState((prev) => ({ ...prev, error: undefined, loading: true }));
 
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        body: data && JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const responseBody = await response.json();
-      setState((prev) => ({ ...prev, data: responseBody }));
-    } catch (e) {
-      setState((prev) => ({ ...prev, error: e }));
-    } finally {
-      setState((prev) => ({ ...prev, loading: false }));
-    }
+    fetch(url, {
+      method: "POST",
+      body: data && JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => setState((prev) => ({ ...prev, data: json })))
+      .catch((error) => {
+        console.log(error);
+        setState((prev) => ({ ...prev, error }));
+      })
+      .finally(() => setState((prev) => ({ ...prev, loading: false })));
   }
 
   return [mutation, state];

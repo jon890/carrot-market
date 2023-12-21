@@ -60,6 +60,10 @@ export default function Enter() {
     console.log(loading, data, error);
   }, [loading, data, error]);
 
+  useEffect(() => {
+    console.log(tokenLoading, tokenData, tokenError);
+  }, [tokenLoading, tokenData, tokenError]);
+
   return (
     <div className="mt-16 px-4">
       <h3 className="text-center text-3xl font-bold">Enter to Carrot</h3>
