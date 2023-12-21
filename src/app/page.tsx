@@ -1,10 +1,12 @@
 import FloatingButton from "@/components/floating-button";
 import Item from "@/components/item";
 import Layout from "@/components/layout";
-import { NextPage } from "next";
+import { getProfileIfLoggedIn } from "@/libs/server/get-profile";
 import Link from "next/link";
 
-const Home: NextPage = () => {
+export default async function Home() {
+  const user = await getProfileIfLoggedIn();
+
   return (
     <Layout title="홈" hasTabBar>
       <div className="flex flex-col space-y-5 divide-y py-10">
@@ -34,6 +36,4 @@ const Home: NextPage = () => {
       </div>
     </Layout>
   );
-};
-
-export default Home;
+}
