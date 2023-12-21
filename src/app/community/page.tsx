@@ -1,16 +1,17 @@
 import Badge from "@/components/badge";
 import FloatingButton from "@/components/floating-button";
 import Layout from "@/components/layout";
-import type { NextPage } from "next";
+import { getProfileIfLoggedIn } from "@/libs/server/get-profile";
 import Link from "next/link";
 
-const Community: NextPage = () => {
+export default async function Community() {
+  const user = await getProfileIfLoggedIn();
   return (
     <Layout title="동네생활" hasTabBar>
       <div className="space-y-8 px-4 py-16">
         {[1, 2, 3, 4, 5, 6].map((_, i) => (
-          <Link href={`community/${i}`}>
-            <div key={i} className="flex cursor-pointer flex-col items-start">
+          <Link href={`community/${i}`} key={i}>
+            <div className="flex cursor-pointer flex-col items-start">
               <Badge className="flex items-center">동네질문</Badge>
 
               <div className="mt-2 text-gray-700">
@@ -81,6 +82,4 @@ const Community: NextPage = () => {
       </div>
     </Layout>
   );
-};
-
-export default Community;
+}

@@ -168,7 +168,7 @@ export default function Layout({
             href="/profile"
             className={classnames(
               "flex flex-col items-center space-y-2",
-              pathname === "/profile"
+              pathname === "/streams"
                 ? "text-orange-500"
                 : "hover:text-gray-500 transition-colors"
             )}
