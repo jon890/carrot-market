@@ -66,7 +66,7 @@ export default function Enter() {
     if (tokenData?.ok) {
       router.push("/");
     }
-  }, [tokenData]);
+  }, [tokenData, router]);
 
   return (
     <div className="mt-16 px-4">
