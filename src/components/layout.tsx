@@ -2,7 +2,7 @@
 
 import { classnames } from "@/libs/client/utils";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 
 interface LayoutProps {
   title?: string;
@@ -18,6 +18,7 @@ export default function Layout({
   title,
 }: LayoutProps) {
   const router = useRouter();
+  const pathname = usePathname();
 
   const goBack = () => {
     router.back();
@@ -28,12 +29,11 @@ export default function Layout({
       {/* NavBar */}
       <div
         className={classnames(
-          !canGoBack ? "justify-center" : "",
-          "fixed top-0 flex w-full max-w-xl items-center border-b bg-white px-10 py-3 text-lg  font-medium text-gray-800"
+          "bg-white w-full h-12 max-w-xl justify-center text-lg px-10 font-medium fixed text-gray-800 border-b top-0 flex items-center"
         )}
       >
         {canGoBack && (
-          <button onClick={goBack}>
+          <button onClick={goBack} className="absolute left-4">
             <svg
               className="h-6 w-6"
               fill="none"
@@ -50,7 +50,11 @@ export default function Layout({
             </svg>
           </button>
         )}
-        {title && <span>{title}</span>}
+        {title && (
+          <span className={classnames(canGoBack ? "mx-auto" : "")}>
+            {title}
+          </span>
+        )}
       </div>
 
       <div className={classnames("pt-12", hasTabBar ? "pb-24" : "")}>
@@ -59,8 +63,16 @@ export default function Layout({
 
       {/* Bottom Navigation */}
       {hasTabBar && (
-        <nav className="fixed bottom-0 flex w-full max-w-xl justify-between border-t bg-white px-10 pb-5 pt-3 text-xs text-gray-700">
-          <Link href="/" className="flex flex-col items-center space-y-2">
+        <nav className="bg-white max-w-xl text-gray-700 border-t fixed bottom-0 w-full px-10 pb-5 pt-3 flex justify-between text-xs">
+          <Link
+            href="/"
+            className={classnames(
+              "flex flex-col items-center space-y-2",
+              pathname === "/"
+                ? "text-orange-500"
+                : "hover:text-gray-500 transition-colors"
+            )}
+          >
             <svg
               className="h-6 w-6"
               fill="none"
@@ -79,7 +91,12 @@ export default function Layout({
           </Link>
           <Link
             href="/community"
-            className="flex flex-col items-center space-y-2"
+            className={classnames(
+              "flex flex-col items-center space-y-2",
+              pathname === "/community"
+                ? "text-orange-500"
+                : "hover:text-gray-500 transition-colors"
+            )}
           >
             <svg
               className="h-6 w-6"
@@ -97,7 +114,15 @@ export default function Layout({
             </svg>
             <span>동내생활</span>
           </Link>
-          <Link href="/chats" className="flex flex-col items-center space-y-2">
+          <Link
+            href="/chats"
+            className={classnames(
+              "flex flex-col items-center space-y-2",
+              pathname === "/chats"
+                ? "text-orange-500"
+                : "hover:text-gray-500 transition-colors"
+            )}
+          >
             <svg
               className="h-6 w-6"
               fill="none"
@@ -116,7 +141,12 @@ export default function Layout({
           </Link>
           <Link
             href="/streams"
-            className="flex flex-col items-center space-y-2"
+            className={classnames(
+              "flex flex-col items-center space-y-2",
+              pathname === "/streams"
+                ? "text-orange-500"
+                : "hover:text-gray-500 transition-colors"
+            )}
           >
             <svg
               className="h-6 w-6"
@@ -136,7 +166,12 @@ export default function Layout({
           </Link>
           <Link
             href="/profile"
-            className="flex flex-col items-center space-y-2"
+            className={classnames(
+              "flex flex-col items-center space-y-2",
+              pathname === "/profile"
+                ? "text-orange-500"
+                : "hover:text-gray-500 transition-colors"
+            )}
           >
             <svg
               className="h-6 w-6"
