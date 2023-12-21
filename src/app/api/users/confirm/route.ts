@@ -1,6 +1,5 @@
 import client from "@/libs/server/prisma-client";
-import { getIronSession } from "iron-session";
-import { cookies } from "next/headers";
+import { getSession } from "@/libs/server/session";
 import { NextRequest, NextResponse } from "next/server";
 
 type SessionData = {
@@ -22,11 +21,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false }, { status: 400 });
   }
 
-  const session = await getIronSession<SessionData>(cookies(), {
-    password: process.env.AUTH_KEY!,
-    cookieName: "NEXT_SESSION",
-  });
-
+  const session = await getSession();
   session.user = {
     id: exists.userId,
   };
