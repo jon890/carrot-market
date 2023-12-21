@@ -1,16 +1,13 @@
 import client from "@/libs/server/prisma-client";
-import { getSession } from "@/libs/server/session";
+import { protectedRoute } from "@/libs/server/protected-route";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
-  const session = await getSession();
-  if (!session?.user?.id) {
-    return NextResponse.json({ ok: false }, { status: 400 });
-  }
+  return protectedRoute(async (session) => {
+    const profile = await client.user.findUnique({
+      where: { id: session.user?.id },
+    });
 
-  const profile = await client.user.findUnique({
-    where: { id: session.user?.id },
+    return NextResponse.json({ ok: true, data: profile }, { status: 200 });
   });
-
-  return NextResponse.json({ ok: true, data: profile }, { status: 200 });
 }
