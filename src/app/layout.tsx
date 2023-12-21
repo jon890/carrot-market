@@ -1,3 +1,4 @@
+import SWRProvider from "@/components/swr-provider";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
@@ -16,7 +17,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="w-full max-w-xl mx-auto">{children}</div>
+        <SWRProvider>
+          <div className="w-full max-w-xl mx-auto">{children}</div>
+        </SWRProvider>
       </body>
     </html>
   );

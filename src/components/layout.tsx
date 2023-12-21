@@ -1,6 +1,5 @@
 "use client";
 
-import useUser from "@/libs/client/useUser";
 import { classnames } from "@/libs/client/utils";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
