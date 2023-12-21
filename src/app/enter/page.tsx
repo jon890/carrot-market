@@ -4,6 +4,7 @@ import Button from "@/components/button";
 import Input from "@/components/input";
 import useMutation from "@/libs/client/useMutation";
 import { classnames } from "@/libs/client/utils";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -21,6 +22,7 @@ interface MutationResult {
 }
 
 export default function Enter() {
+  const router = useRouter();
   const [method, setMethod] = useState<"email" | "phone">("email");
 
   const { register, reset, handleSubmit } = useForm<EnterForm>();
@@ -56,13 +58,15 @@ export default function Enter() {
     confirmToken(data);
   };
 
-  useEffect(() => {
-    console.log(loading, data, error);
-  }, [loading, data, error]);
+  // useEffect(() => {
+  //   console.log(loading, data, error);
+  // }, [loading, data, error]);
 
   useEffect(() => {
-    console.log(tokenLoading, tokenData, tokenError);
-  }, [tokenLoading, tokenData, tokenError]);
+    if (tokenData?.ok) {
+      router.push("/");
+    }
+  }, [tokenData]);
 
   return (
     <div className="mt-16 px-4">

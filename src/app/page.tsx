@@ -9,8 +9,8 @@ const Home: NextPage = () => {
     <Layout title="홈" hasTabBar>
       <div className="flex flex-col space-y-5 divide-y py-10">
         {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => (
-          <Link href={`items/${i}`}>
-            <Item key={i} />
+          <Link href={`items/${i}`} key={i}>
+            <Item />
           </Link>
         ))}
 
