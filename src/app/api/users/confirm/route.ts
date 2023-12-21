@@ -23,7 +23,6 @@ export async function POST(req: NextRequest) {
 
   await client.token.deleteMany({
     where: {
-      payload: token,
       userId: foundToken.userId,
     },
   });
