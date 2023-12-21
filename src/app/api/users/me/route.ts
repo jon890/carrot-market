@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   const session = await getSession();
-  if (!session) {
+  if (!session?.user?.id) {
     return NextResponse.json({ ok: false }, { status: 400 });
   }
 
