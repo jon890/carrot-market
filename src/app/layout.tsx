@@ -1,6 +1,7 @@
 import SWRProvider from "@/components/swr-provider";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { classnames } from "@/libs/client/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,9 +17,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body
+        className={classnames(
+          inter.className,
+          "mx-auto max-w-sm bg-neutral-900 text-white",
+        )}
+      >
         <SWRProvider>
-          <div className="w-full max-w-xl mx-auto">{children}</div>
+          <main>{children}</main>
         </SWRProvider>
       </body>
     </html>

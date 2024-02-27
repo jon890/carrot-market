@@ -5,7 +5,7 @@ import client from "./prisma-client";
 export async function getProfileIfLoggedIn() {
   const session = await getSession();
   if (!session.user) {
-    redirect("/enter", RedirectType.replace);
+    redirect("/login", RedirectType.replace);
   }
 
   const profile = await client.user.findUnique({
