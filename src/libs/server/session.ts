@@ -1,4 +1,4 @@
-import { SessionData } from "types/session-data";
+import { SessionData } from "@/@types/session-data";
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 

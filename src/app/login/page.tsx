@@ -1,7 +1,7 @@
 "use client";
 
 import FormButton from "@/components/form-button";
-import FormInput from "@/components/form-input";
+import FormInput from "@/components/input";
 import SocialLogin from "@/components/social-login";
 import { useFormState } from "react-dom";
 import { handleForm } from "./actions";
@@ -19,13 +19,7 @@ export default function LoginPage() {
       </div>
 
       <form className="flex flex-col gap-3" action={action}>
-        <FormInput
-          name="email"
-          type="email"
-          placeholder="Email"
-          errors={[""]}
-          required
-        />
+        <FormInput name="email" type="email" placeholder="Email" required />
         <FormInput
           name="password"
           type="password"

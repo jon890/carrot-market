@@ -1,7 +1,7 @@
 "use client";
 
 import FormButton from "@/components/form-button";
-import FormInput from "@/components/form-input";
+import FormInput from "@/components/input";
 import SocialLogin from "@/components/social-login";
 import useMutation from "@/libs/client/useMutation";
 import { useRouter } from "next/navigation";
