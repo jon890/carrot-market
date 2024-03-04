@@ -1,12 +1,31 @@
 "use server";
 
-export async function handleForm(prevState: any, data: FormData) {
-  console.log("prevState", prevState);
-  await new Promise((resolve) => setTimeout(resolve, 5000));
-  console.log("im run in the server baby");
-  console.log(data.get("email"), data.get("password"));
+import {
+  PASSWORD_MIN_LENGTH,
+  PASSWORD_REGEX,
+  PASSWORD_REGEX_ERROR,
+} from "@/libs/constants";
+import { z } from "zod";
 
-  return {
-    errors: ["wrong password", "password too short"],
+const formSchema = z.object({
+  email: z.string().email().toLowerCase(),
+  password: z
+    .string()
+    .min(PASSWORD_MIN_LENGTH)
+    .regex(PASSWORD_REGEX, PASSWORD_REGEX_ERROR),
+});
+
+export async function login(prevState: any, formData: FormData) {
+  const data = {
+    ...Object.fromEntries(formData.entries()),
   };
+
+  const result = formSchema.safeParse(data);
+  if (!result.success) {
+    return result.error.flatten();
+  } else {
+    console.log(result.data);
+  }
+
+  return null;
 }

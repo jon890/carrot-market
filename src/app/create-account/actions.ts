@@ -1,5 +1,10 @@
 "use server";
 
+import {
+  PASSWORD_MIN_LENGTH,
+  PASSWORD_REGEX,
+  PASSWORD_REGEX_ERROR,
+} from "@/libs/constants";
 import { z } from "zod";
 
 function checkUsername(username: string) {
@@ -16,10 +21,6 @@ function checkPassword({
   return password === confirm_password;
 }
 
-const passwordRegex = new RegExp(
-  /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).+$/,
-);
-
 const formSchema = z
   .object({
     username: z
@@ -35,12 +36,9 @@ const formSchema = z
     email: z.string().email(),
     password: z
       .string()
-      .min(10)
-      .regex(
-        passwordRegex,
-        "A password must have lowercase, UPPSERCASE, a number and special characters.",
-      ),
-    confirm_password: z.string().min(10),
+      .min(PASSWORD_MIN_LENGTH)
+      .regex(PASSWORD_REGEX, PASSWORD_REGEX_ERROR),
+    confirm_password: z.string().min(PASSWORD_MIN_LENGTH),
   })
   .refine(checkPassword, {
     message: "Both passwords should be the same!",

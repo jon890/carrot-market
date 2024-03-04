@@ -4,10 +4,11 @@ import FormButton from "@/components/form-button";
 import FormInput from "@/components/input";
 import SocialLogin from "@/components/social-login";
 import { useFormState } from "react-dom";
-import { handleForm } from "./actions";
+import { login } from "./actions";
+import { PASSWORD_MIN_LENGTH } from "@/libs/constants";
 
 export default function LoginPage() {
-  const [state, action] = useFormState(handleForm, null);
+  const [state, action] = useFormState(login, null);
 
   console.log(state);
 
@@ -19,13 +20,20 @@ export default function LoginPage() {
       </div>
 
       <form className="flex flex-col gap-3" action={action}>
-        <FormInput name="email" type="email" placeholder="Email" required />
+        <FormInput
+          name="email"
+          type="email"
+          placeholder="Email"
+          required
+          errors={state?.fieldErrors?.email}
+        />
         <FormInput
           name="password"
           type="password"
           placeholder="Password"
-          errors={state?.errors ?? []}
+          errors={state?.fieldErrors.password}
           required
+          minLength={PASSWORD_MIN_LENGTH}
         />
         <FormButton text="Login" />
       </form>
