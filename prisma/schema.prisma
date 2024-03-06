@@ -12,23 +12,25 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  phone     String?  @unique
-  email     String?  @unique
-  name      String
+  id        Int        @id @default(autoincrement())
+  username  String     @unique
+  email     String?    @unique
+  phone     String?    @unique
+  github_id String?
+  password  String?
   avatar    String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  tokens    Token[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  tokens    SMSToken[]
 }
 
-model Token {
+model SMSToken {
   id        Int      @id @default(autoincrement())
-  payload   String   @unique
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
