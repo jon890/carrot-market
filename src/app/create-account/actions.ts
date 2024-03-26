@@ -5,6 +5,10 @@ import {
   PASSWORD_REGEX,
   PASSWORD_REGEX_ERROR,
 } from "@/libs/constants";
+import client from "@/libs/server/prisma-client";
+import { getSession } from "@/libs/server/session";
+import bcrypt from "bcrypt";
+import { redirect } from "next/navigation";
 import { z } from "zod";
 
 function checkUsername(username: string) {
@@ -34,6 +38,7 @@ const formSchema = z
       .trim()
       .refine(checkUsername, "custom error"),
     email: z.string().email(),
+
     password: z
       .string()
       .min(PASSWORD_MIN_LENGTH)
@@ -43,6 +48,46 @@ const formSchema = z
   .refine(checkPassword, {
     message: "Both passwords should be the same!",
     path: ["confirm_password"],
+  })
+  .superRefine(async ({ username }, ctx) => {
+    const user = await client.user.findUnique({
+      where: {
+        username,
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    if (user) {
+      ctx.addIssue({
+        code: "custom",
+        message: "This username is already taken",
+        path: ["username"],
+        fatal: true,
+      });
+      return z.NEVER;
+    }
+  })
+  .superRefine(async ({ email }, ctx) => {
+    const user = await client.user.findUnique({
+      where: {
+        email,
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    if (user) {
+      ctx.addIssue({
+        code: "custom",
+        message: "This email is already taken",
+        path: ["email"],
+        fatal: true,
+      });
+      return z.NEVER;
+    }
   });
 
 export async function createAccount(prevState: any, formData: FormData) {
@@ -53,18 +98,27 @@ export async function createAccount(prevState: any, formData: FormData) {
     confirm_password: formData.get("confirm_password"),
   };
 
-  const result = formSchema.safeParse(data);
+  const result = await formSchema.spa(data);
   if (!result.success) {
-    console.log(result, result.error.flatten());
     return result.error.flatten();
   } else {
-    // check if username is taken
-    // check if the email is already used
-    // hash password
-    // save he user to db
-    // log the user in
-    // redirect "/home"
-    console.log(result.data);
+    const hashedPassword = await bcrypt.hash(result.data.password, 12);
+
+    const user = await client.user.create({
+      data: {
+        username: result.data.username,
+        email: result.data.email,
+        password: hashedPassword,
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    const session = await getSession();
+    session.id = user.id;
+    await session.save();
+    redirect("/profile");
   }
 
   return null;

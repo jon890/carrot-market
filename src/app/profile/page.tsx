@@ -1,8 +1,7 @@
 import Layout from "@/components/layout";
-import type { NextPage } from "next";
 import Link from "next/link";
 
-const Profile: NextPage = () => {
+export default function ProfilePage() {
   return (
     <Layout title="나의 캐럿" hasTabBar>
       <div className="px-4 py-10">
@@ -151,6 +150,4 @@ const Profile: NextPage = () => {
       </div>
     </Layout>
   );
-};
-
-export default Profile;
+}

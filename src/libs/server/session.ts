@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 
 export function getSession() {
   return getIronSession<SessionData>(cookies(), {
-    password: process.env.AUTH_KEY!,
-    cookieName: "NEXT_SESSION",
+    password: process.env.COOKIE_PASSWORD!,
+    cookieName: "delicious-karrot",
   });
 }
