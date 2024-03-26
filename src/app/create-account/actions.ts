@@ -58,6 +58,12 @@ export async function createAccount(prevState: any, formData: FormData) {
     console.log(result, result.error.flatten());
     return result.error.flatten();
   } else {
+    // check if username is taken
+    // check if the email is already used
+    // hash password
+    // save he user to db
+    // log the user in
+    // redirect "/home"
     console.log(result.data);
   }
 
