@@ -55,8 +55,7 @@ export default function ProductList({ initialProducts }: Props) {
 
       {!isLastPage && (
         <span
-          style={{ marginTop: `${page + 1 * 900}vh` }}
-          className="mx-auto mb-96 mt-[300vh] w-fit rounded-md bg-orange-500 px-3 py-2 text-sm font-semibold hover:opacity-90 active:scale-95"
+          className="mx-auto w-fit rounded-md bg-orange-500 px-3 py-2 text-sm font-semibold hover:opacity-90 active:scale-95"
           ref={trigger}
         >
           {isLoading ? "로딩 중" : "Load more"}
