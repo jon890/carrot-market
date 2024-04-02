@@ -1,7 +1,5 @@
-import Layout from "@/components/layout";
 import client from "@/libs/server/prisma-client";
 import { getSession } from "@/libs/server/session";
-import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
 async function getUser() {
