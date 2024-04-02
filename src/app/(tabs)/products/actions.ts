@@ -1,7 +1,8 @@
-import ProductList from "@/components/product-list";
+"use server";
+
 import client from "@/libs/prisma-client";
 
-export async function getInitialProducts() {
+export async function getMoreProducts(page: number) {
   const products = await client.product.findMany({
     select: {
       title: true,
@@ -10,6 +11,7 @@ export async function getInitialProducts() {
       photo: true,
       id: true,
     },
+    skip: page * 1,
     take: 1,
     orderBy: {
       createdAt: "desc",
@@ -17,14 +19,4 @@ export async function getInitialProducts() {
   });
 
   return products;
-}
-
-export default async function ProductsPage() {
-  const initialProducts = await getInitialProducts();
-
-  return (
-    <div>
-      <ProductList initialProducts={initialProducts} />
-    </div>
-  );
 }
