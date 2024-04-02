@@ -21,6 +21,7 @@ model User {
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   tokens    SMSToken[]
+  Product   Product[]
 }
 
 model SMSToken {
@@ -32,4 +33,16 @@ model SMSToken {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
+  title       String
+  price       Float
+  description String
+  photo       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
