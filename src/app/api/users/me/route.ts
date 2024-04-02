@@ -1,4 +1,4 @@
-import client from "@/libs/server/prisma-client";
+import client from "@/libs/prisma-client";
 import { protectedRoute } from "@/libs/server/protected-route";
 import { NextRequest, NextResponse } from "next/server";
 

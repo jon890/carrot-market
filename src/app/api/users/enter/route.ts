@@ -1,4 +1,4 @@
-import prismaClient from "@/libs/server/prisma-client";
+import prismaClient from "@/libs/prisma-client";
 import { sendEmail } from "@/libs/server/sendgrid-client";
 import { sendMessage } from "@/libs/server/twilio-client";
 import { NextRequest, NextResponse } from "next/server";

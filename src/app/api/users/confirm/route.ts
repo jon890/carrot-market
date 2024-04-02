@@ -1,5 +1,5 @@
-import client from "@/libs/server/prisma-client";
-import { getSession } from "@/libs/server/session";
+import client from "@/libs/prisma-client";
+import { getSession } from "@/libs/session";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {

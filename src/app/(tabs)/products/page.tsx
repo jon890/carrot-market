@@ -1,15 +1,28 @@
-async function getProducts() {
-  await new Promise((resolve) => setTimeout(resolve, 10000));
+import ListProduct from "@/components/list-product";
+import client from "@/libs/prisma-client";
 
-  return [];
+async function getProducts() {
+  const products = await client.product.findMany({
+    select: {
+      title: true,
+      price: true,
+      createdAt: true,
+      photo: true,
+      id: true,
+    },
+  });
+
+  return products;
 }
 
 export default async function ProductsPage() {
   const products = await getProducts();
 
   return (
-    <div>
-      <h1 className="text-4xl text-white"></h1>
+    <div className="flex flex-col gap-5 p-5">
+      {products.map((product) => (
+        <ListProduct {...product} key={product.id} />
+      ))}
     </div>
   );
 }

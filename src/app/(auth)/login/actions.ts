@@ -2,9 +2,9 @@
 
 import bcrypt from "bcrypt";
 import { PASSWORD_MIN_LENGTH } from "@/libs/constants";
-import client from "@/libs/server/prisma-client";
+import client from "@/libs/prisma-client";
 import { z } from "zod";
-import { getSession } from "@/libs/server/session";
+import { getSession } from "@/libs/session";
 import { redirect } from "next/navigation";
 
 async function checkEmailExists(email: string) {

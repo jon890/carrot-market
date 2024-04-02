@@ -5,8 +5,8 @@ import {
   PASSWORD_REGEX,
   PASSWORD_REGEX_ERROR,
 } from "@/libs/constants";
-import client from "@/libs/server/prisma-client";
-import { getSession } from "@/libs/server/session";
+import client from "@/libs/prisma-client";
+import { getSession } from "@/libs/session";
 import bcrypt from "bcrypt";
 import { redirect } from "next/navigation";
 import { z } from "zod";
